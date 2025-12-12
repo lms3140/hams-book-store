@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Menu } from "./_components/Layout/Menu";
-import { Header } from "./_components/Layout/Header";
+
+import DefaultLayout from "./_components/DefaultLayout";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,20 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex ">
-          <div className="border-r border-gray-200 w-2xs min-w-2xs">
-            <div className="h-20 border-b border-gray-200 flex justify-center">
-              <img src="/images/logo.png" alt="logo" className="h-full" />
-            </div>
-            <div>
-              <Menu />
-            </div>
-          </div>
-          <div className="flex-1 min-w-3xl h-dvh flex flex-col">
-            <Header />
-            <div className="flex-1 overflow-auto">{children}</div>
-          </div>
-        </div>
+        <DefaultLayout>{children}</DefaultLayout>
       </body>
     </html>
   );
