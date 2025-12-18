@@ -21,7 +21,11 @@
 
 @layer utilities {
   .form-input {
-    @apply mb-2 rounded-md p-1 focus:outline-none border border-slate-300;
+    @apply mb-2 rounded-md p-1 focus:outline-none border border-slate-300 focus:border-slate-400;
+  }
+
+  .search-input {
+    @apply mb-2 rounded-4xl px-3 py-2 focus:outline-none border border-slate-300 focus:border-slate-400;
   }
 
   .form-text {

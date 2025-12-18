@@ -11,7 +11,7 @@ export const getClientFetch = async (url: string, token?: string) => {
     throw new Error(`(${resp.status}) ${resp.statusText}`);
   }
   const data = await resp.json();
-  return data;
+  return { data, resp };
 };
 
 export const postClientFetch = async <T>(
@@ -33,5 +33,5 @@ export const postClientFetch = async <T>(
     throw new Error(`(${resp.status}) ${resp.statusText}`);
   }
   const data = await resp.json();
-  return data;
+  return { data, resp };
 };
