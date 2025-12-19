@@ -22,13 +22,23 @@ export default function LoginForm() {
       credentials: "include",
     });
     const data = await resp.json();
-    Swal.fire({
-      title: "로그인 성공",
-      icon: "success",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    redirect("/book");
+    console.log(data);
+    if (data.login) {
+      Swal.fire({
+        title: "로그인 성공",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      redirect("/book");
+    } else {
+      Swal.fire({
+        title: "실패",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ export const getServerFetch = async (url: string, token?: string) => {
     cache: "force-cache",
     next: { revalidate: 60 },
   });
+  console.log(url);
   if (!resp.ok) {
     throw new Error(`${resp.status}`);
   }

@@ -4,13 +4,14 @@ export type Book = {
   subCategoryId: string;
   publisherId: string;
   price: number;
-  point: string;
+  point?: string;
   publishedDate: Date;
-  description: string;
-  author: string;
-  imageUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
+  description?: string;
+  authors: string[];
+  translators?: string[];
+  imageUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type RequestBookInfo = {

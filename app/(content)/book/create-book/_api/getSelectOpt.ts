@@ -7,9 +7,8 @@ import {
 } from "../_types/category";
 
 export const getCategory = async () => {
-  const data = (await getClientFetch(
-    "http://localhost:8080/category/list"
-  )) as RespCategory[];
+  const data = (await getClientFetch("http://localhost:8080/category/list"))
+    .data as RespCategory[];
   const selectOpts = data?.map((v: RespCategory) => ({
     value: v.categoryName,
     id: v.categoryId,
@@ -18,9 +17,8 @@ export const getCategory = async () => {
 };
 
 export const getPublisher = async () => {
-  const data = (await getClientFetch(
-    "http://localhost:8080/publisher/list"
-  )) as RespPublisher[];
+  const data = (await getClientFetch("http://localhost:8080/publisher/list"))
+    .data as RespPublisher[];
   const selectOpts = data?.map((v: RespPublisher) => ({
     value: v.name,
     id: v.publisherId,
@@ -29,9 +27,8 @@ export const getPublisher = async () => {
 };
 
 export const getAuthor = async () => {
-  const data = (await getClientFetch(
-    "http://localhost:8080/author/list"
-  )) as RespAuthor[];
+  const data = (await getClientFetch("http://localhost:8080/author/list"))
+    .data as RespAuthor[];
   const selectOpts = data?.map((v: RespAuthor) => ({
     value: v.name,
     id: v.authorId,
@@ -41,9 +38,11 @@ export const getAuthor = async () => {
 
 export const getSubCategory = async (watchCategory: string) => {
   if (watchCategory === "" || watchCategory === undefined) return;
-  const data = (await getClientFetch(
-    `http://localhost:8080/category/sub-list?categoryId=${watchCategory}`
-  )) as RespSubCategory[];
+  const data = (
+    await getClientFetch(
+      `http://localhost:8080/category/sub-list?categoryId=${watchCategory}`
+    )
+  ).data as RespSubCategory[];
 
   const newArr = data?.map((v: RespSubCategory) => ({
     value: v.subcategoryName,
