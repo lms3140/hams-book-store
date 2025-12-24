@@ -86,15 +86,15 @@ export default function ItemContainer({ books }: ItemContainerProps) {
   });
 
   return (
-    <div className="flex-col max-h-full w-full overflow-auto table-fixed border-separate border-spacing-0 flex justify-center">
-      <table className="mb-20">
+    <div className="flex w-full flex-col max-h-full overflow-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <table className="w-full table-fixed border-separate border-spacing-0">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className=" z-20 sticky top-0 bg-slate-100 border-b"
+                  className="sticky top-0 z-20 border-b border-slate-200 bg-slate-50 px-3 py-2 text-left text-sm font-semibold text-slate-700"
                 >
                   {header.isPlaceholder
                     ? null
@@ -108,10 +108,18 @@ export default function ItemContainer({ books }: ItemContainerProps) {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+          {table.getRowModel().rows.map((row, idx) => (
+            <tr
+              key={row.id}
+              className={`${
+                idx % 2 === 0 ? "bg-white" : "bg-slate-50"
+              } hover:bg-indigo-50 transition`}
+            >
               {row.getVisibleCells().map((cell) => (
-                <td className="max-w-80 truncate px-2 border" key={cell.id}>
+                <td
+                  key={cell.id}
+                  className="max-w-80 truncate border-b border-slate-200 px-3 py-2 text-sm text-slate-800"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -122,7 +130,10 @@ export default function ItemContainer({ books }: ItemContainerProps) {
           {table.getFooterGroups().map((footerGroup) => (
             <tr key={footerGroup.id}>
               {footerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th
+                  key={header.id}
+                  className="border-t px-3 py-2 text-sm text-slate-600"
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -135,74 +146,76 @@ export default function ItemContainer({ books }: ItemContainerProps) {
           ))}
         </tfoot>
       </table>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 text-sm">
         <button
-          className="border rounded p-1"
+          className="rounded border border-slate-300 px-2 py-1 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200"
           onClick={() => table.firstPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {"<<"}
         </button>
+
         <button
-          className="border rounded p-1"
+          className="rounded border border-slate-300 px-2 py-1 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {"<"}
         </button>
+
         <button
-          className="border rounded p-1"
+          className="rounded border border-slate-300 px-2 py-1 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           {">"}
         </button>
+
         <button
-          className="border rounded p-1"
+          className="rounded border border-slate-300 px-2 py-1 text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200"
           onClick={() => table.lastPage()}
           disabled={!table.getCanNextPage()}
         >
           {">>"}
         </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount().toLocaleString()}
-          </strong>
-        </span>
-        <span className="flex items-center gap-1">
-          | Go to page:
-          <input
-            type="number"
-            min="1"
-            max={table.getPageCount()}
-            defaultValue={table.getState().pagination.pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              table.setPageIndex(page);
-            }}
-            className="border p-1 rounded w-16"
-          />
-        </span>
-        <select
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+
+        <div className="flex items-center gap-2">
+          <span>
+            Page{" "}
+            <strong>
+              {table.getState().pagination.pageIndex + 1} /{" "}
+              {table.getPageCount().toLocaleString()}
+            </strong>
+          </span>
+
+          <span className="flex items-center gap-1">
+            이동
+            <input
+              type="number"
+              min="1"
+              max={table.getPageCount()}
+              defaultValue={table.getState().pagination.pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                table.setPageIndex(page);
+              }}
+              className="w-16 rounded border border-slate-300 px-2 py-1"
+            />
+          </span>
+
+          <select
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => table.setPageSize(Number(e.target.value))}
+            className="rounded border border-slate-300 px-2 py-1"
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}개씩
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-      <div>
-        Showing {table.getRowModel().rows.length.toLocaleString()} of{" "}
-        {table.getRowCount().toLocaleString()} Rows
-      </div>
-      <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
     </div>
   );
 }
